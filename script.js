@@ -25,8 +25,18 @@ const createCustomElement = (element, className, innerText) => {
   return e;
 };
 
+const saveItemsInLocalStorage = () => {
+  const elementItems = document.querySelectorAll('.cart__item');
+  const array = [];
+  elementItems.forEach((element) => {
+    array.push(element.innerText);
+  });
+  saveCartItems(JSON.stringify(array));
+};
+
 const cartItemClickListener = (event) => {
   cartItems.removeChild(event.target);
+  saveItemsInLocalStorage();
 };
 
 const createCartItemElement = ({ sku, name, salePrice }) => {
@@ -48,6 +58,7 @@ const addItemToCart = async (element) => {
  const produto = createCartItemElement({ sku, name, salePrice });
 
  cartItems.appendChild(produto);
+  saveItemsInLocalStorage();
 };
 
 const createProductItemElement = ({ sku, name, image }) => {
@@ -74,6 +85,18 @@ const addElementToPage = async () => {
     sectionItems.appendChild(createProductItemElement({ sku: id, name: title, image: thumbnail }));
   });
   removeLoading();
+};
+
+const getCartFromLocalStorage = () => { // Recuperando LocalStorage
+  const arrayItems = JSON.parse(getSavedCartItems());
+  if (arrayItems !== null) {
+    arrayItems.forEach((element) => {
+      const li = createCustomElement('li', 'cart__item', element);
+      li.addEventListener('click', (event) => cartItemClickListener(event));
+      cartList.appendChild(li);
+    });
+    sumTotal();
+  }
 };
 
 const cartClear = () => emptyCart.addEventListener('click', () => {
