@@ -1,5 +1,6 @@
 const sectionItems = document.querySelector('.items');
 const cartItems = document.querySelector('.cart__items');
+const emptyCart = document.querySelector('.empty-cart');
 
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
@@ -64,6 +65,11 @@ const addElementToPage = async () => {
   });
 };
 
+const cartClear = () => emptyCart.addEventListener('click', () => {
+  cartItems.innerHTML = '';
+});
+
 window.onload = () => { 
    addElementToPage();
+   cartClear();
 };
