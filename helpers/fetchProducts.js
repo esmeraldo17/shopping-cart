@@ -10,8 +10,6 @@ const fetchProducts = async (product) => {
   }
 };
 
-
-
 if (typeof module !== 'undefined') {
   module.exports = {
     fetchProducts,
