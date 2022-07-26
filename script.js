@@ -106,4 +106,5 @@ const cartClear = () => emptyCart.addEventListener('click', () => {
 window.onload = () => { 
    addElementToPage();
    cartClear();
+   getCartFromLocalStorage();
 };
